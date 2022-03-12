@@ -1,56 +1,30 @@
 import { useState } from 'react';
-import Card from './Card';
+import SingleCard from './SingleCard';
 const audio = document.createElement('audio');
 
 function Cards({ tracks, setTracks }) {
 
   // tracks = tracks ? tracks.sort(() => Math.random() - 0.5) : []
 
-  const [prevIndex, setPrevIndex] = useState(-1);
+  const [cards, setCards] = useState([]);
+  const [turns, setTurns] = useState(0);
+  const [choiceOne, setChoiceOne] = useState(null)
+  const [choiceTwo, setChoiceTwo] =useState(null)
 
-  function check(currentIndex){
-    if(tracks[currentIndex].id === tracks[prevIndex].id){
-        tracks[currentIndex].type = "correct"
-        tracks[prevIndex].type = "correct"
-        setTracks([...tracks])
-        setPrevIndex(-1)
-    }else {
-        // tracks[currentIndex].type = "wrong"
-        // tracks[prevIndex].type = "wrong"
-        setTracks([...tracks])
 
-        setTimeout(() => {
-            tracks[currentIndex].type = ""
-            tracks[prevIndex].type = ""
-            setTracks([...tracks])
-            setPrevIndex(-1)
-        }, 300)
+  const handleChoice = (track) => {
+    //console.log(track)
+    choiceOne ? setChoiceTwo(track) : setChoiceOne(track)
   }
-}
-
-  function chooseSong(index){
-    if(prevIndex == -1){
-    tracks[index].type = "active"
-    setTracks([...tracks])
-    setPrevIndex(index)
-    } else {
-      check(index)
-    }
-}
 
   return (
     <div className='container'>
       {tracks ? tracks.map((track, index) => (
-        <Card
+        <SingleCard
           tracks={tracks}
           key={index}
           track={track}
-          index={index}
-          music={audio}
-          setTracks={setTracks}
-          chooseSong={chooseSong}
-          setPrevIndex={setPrevIndex}
-          prevIndex={prevIndex}
+          handleChoice={handleChoice}
         />
       )): ''}
     </div>

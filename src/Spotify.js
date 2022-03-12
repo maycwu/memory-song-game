@@ -7,13 +7,7 @@ function Spotify() {
   const CLIENT_ID = '0e54567ee7f64c469bac869f0d6cfa6e';
   const REDIRECT_URI = 'http://localhost:3000';
   const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
-  const TRACKS_ENDPOINT =
-    'https://api.spotify.com/v1/me/tracks/?time_range=long_term';
-  const PROFILE_ENDPOINT = 'https://api.spotify.com/v1/me';
   const SEARCH_ENDPOINT = 'https://api.spotify.com/v1/search';
-  //const OAUTH_TOKEN =
-  //  'BQCBp8BYzvxA7uVV1UQe0RgLYBbdC_45dVAUDnZQdi0DVdZID496zOIpiIPTv9i6Fx9zVMwWJSJv0vStIB7VHa-RYviKYp23PZ6m7ggymh1wYwn0mVP442SXcE8IwRO5K9p46eaPAUfY3gNK7DfB5P0p0MhGpeM9SIOm8mJczdo2xflx6hB4cg';
-
   const RESPONSE_TYPE = 'token';
 
   const [token, setToken] = useState('');
@@ -79,7 +73,7 @@ function Spotify() {
       setTracks(data.tracks.slice(0, 8).concat(data.tracks.slice(0, 8)));
       // setTracks2(data.tracks.slice(0,7));
     } catch (error) {
-      console.log(error);
+      console.error(error)
     }
   };
 
@@ -101,9 +95,6 @@ function Spotify() {
             Log out
           </button>
         )}
-  
-        {/* {console.log('ARTIST ID', artists)} */}
-
         {token ? (
           <div>
              <button className="btn" onClick={handlerClick}>Play Again</button>
