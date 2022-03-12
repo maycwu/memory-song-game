@@ -40,8 +40,6 @@ function Cards({ tracks, setTracks }) {
 
   return (
     <div className='container'>
-     
-       {console.log('TRACKS', tracks)}
       {tracks ? tracks.map((track, index) => (
         <Card
           tracks={tracks}

@@ -83,6 +83,10 @@ function Spotify() {
     }
   };
 
+  function handlerClick() {
+    window.location.reload();
+ }
+
   return (
     <div className='App'>
       <div className='spotify-searchbar'>
@@ -97,11 +101,12 @@ function Spotify() {
             Log out
           </button>
         )}
-
+  
         {/* {console.log('ARTIST ID', artists)} */}
 
         {token ? (
           <div>
+             <button className="btn" onClick={handlerClick}>Play Again</button>
             <form
               onChange={(e) => {
                 searchArtist(e);

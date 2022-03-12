@@ -7,15 +7,16 @@ function Card({track, tracks, index, handleClick, setTracks, chooseSong, prevInd
 
   const [audioStatus, setAudioStatus] = useState(false);
 
-  function audioClick(status, audioSource) {
-    audio.src = audioSource;
+ async function audioClick(status, audioSource) {
+    audio.src = await audioSource;
     if (status) {
-    //   audio.load();
+      audio.load();
       audio.play();
     } else {
       audio.pause();
+    
     }
-    console.log(status);
+    console.log(audioStatus)
   }
 
   const itemClass = track.type ? ' active ' + track.type : '';
@@ -30,12 +31,12 @@ function Card({track, tracks, index, handleClick, setTracks, chooseSong, prevInd
             console.log('prev index', prevIndex)
          
           }}> 
-        {audioStatus?  <box-icon name='play-circle'></box-icon>  : <box-icon name='pause-circle'></box-icon>}
+        {audioStatus?  <box-icon onClick={audio.pause()} name='play-circle'></box-icon>  : <box-icon name='pause-circle'></box-icon>}
         
-          <p> track id {track.id.slice(0,3)}</p>
+          {/* <p> track id {track.id.slice(0,3)}</p>
           <p> index {index}</p>
-          <p> prev index {prevIndex}</p>
-          {/* {console.log(prevIndex)} */}
+          <p> prev index {prevIndex}</p>  */}
+      
           
         </div>
       ) : (
