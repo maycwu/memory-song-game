@@ -1,58 +1,74 @@
-import { useState } from 'react';
-import Card from './Card';
-const audio = document.createElement('audio');
+import { useState, useEffect } from 'react';
+import SingleCard from './SingleCard';
 
 function Cards({ tracks, setTracks }) {
+  const [turns, setTurns] = useState(0);
+  const [choiceOne, setChoiceOne] = useState(null);
+  const [choiceTwo, setChoiceTwo] = useState(null);
 
-  // tracks = tracks ? tracks.sort(() => Math.random() - 0.5) : []
+  const shuffleCards = () => {
+    tracks = tracks ? tracks.sort(() => Math.random() - 0.5) : [];
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTracks(tracks);
+    setTurns(0);
+  };
 
-  const [prevIndex, setPrevIndex] = useState(-1);
+  const handleChoice = (track) => {
+    choiceOne ? setChoiceTwo(track) : setChoiceOne(track);
+  };
 
-  function check(currentIndex){
-    if(tracks[currentIndex].id === tracks[prevIndex].id){
-        tracks[currentIndex].type = "correct"
-        tracks[prevIndex].type = "correct"
-        setTracks([...tracks])
-        setPrevIndex(-1)
-    }else {
-        // tracks[currentIndex].type = "wrong"
-        // tracks[prevIndex].type = "wrong"
-        setTracks([...tracks])
-
-        setTimeout(() => {
-            tracks[currentIndex].type = ""
-            tracks[prevIndex].type = ""
-            setTracks([...tracks])
-            setPrevIndex(-1)
-        }, 300)
-  }
-}
-
-  function chooseSong(index){
-    if(prevIndex == -1){
-    tracks[index].type = "active"
-    setTracks([...tracks])
-    setPrevIndex(index)
-    } else {
-      check(index)
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      if (choiceOne.id === choiceTwo.id) {
+        console.log('cards match');
+        setTracks((prevTracks) => {
+          return prevTracks.map((track) => {
+            if (track.id === choiceOne.id) {
+              return { ...track, type: true };
+            } else {
+              return track;
+            }
+          });
+        });
+        resetTurn();
+      } else {
+        console.log('cards do not match');
+        setTimeout(() => resetTurn(), 1000);
+      }
     }
-}
+  }, [choiceOne, choiceTwo]);
+
+  const resetTurn = () => {
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTurns((prevTurns) => prevTurns + 1);
+  };
+
+  useEffect(() => {
+    shuffleCards();
+  }, []);
 
   return (
     <div className='container'>
-      {tracks ? tracks.map((track, index) => (
-        <Card
-          tracks={tracks}
-          key={index}
-          track={track}
-          index={index}
-          music={audio}
-          setTracks={setTracks}
-          chooseSong={chooseSong}
-          setPrevIndex={setPrevIndex}
-          prevIndex={prevIndex}
-        />
-      )): ''}
+      {tracks
+        ? tracks.map((track, index) => (
+            <SingleCard
+              tracks={tracks}
+              key={index}
+              index={index}
+              track={track}
+              handleChoice={handleChoice}
+              flipped={
+                track === choiceOne ||
+                track === choiceTwo ||
+                track.type === true
+              }
+              choiceOne={choiceOne}
+              choiceTwo={choiceTwo}
+            />
+          ))
+        : ''}
     </div>
   );
 }

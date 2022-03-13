@@ -15,19 +15,6 @@
   border-radius: 15px;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 *{
   margin: 0;
   padding: 0;
@@ -47,7 +34,7 @@ body {
 }
 
 .container {
-  width: 700px;
+  width: 600px;
   display: grid;
   background-color: rgb(34, 165, 1);
   grid-template-columns: repeat(4, 1fr);
@@ -55,60 +42,6 @@ body {
   gap: 0.5em;
   padding: 10px;
   border-radius: 15px;
-}
-
-.card{
-  background-color: rgb(224, 224, 224);
-  color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  animation: 2s hideCard linear;
-  transition: transform 0.5s;
-  
-}
-
-@keyframes hideCard {
-  0%, 60% {
-    transform: rotateY(0);
-  }
-  100% {
-    transform: rotateY(180deg)
-  }
-}
-
-.card img {
-  max-width: 60%;
-  max-height: 60%;
-  transform: scale(0);
-  animation: 2s hideImage linear;
-}
-
-@keyframes hideImage {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
-}
-
-
-.card.active {
-  transform: rotateY(0)
-}
-
-.card.correct {
-  background-color: green;
-}
-
-.card.wrong {
-  background-color: rgb(255, 0, 0) ;
-}
-
-.card.active img {
-  transform: scale(1)
 }
 
 label {
@@ -136,14 +69,36 @@ label {
   background: #5cbf2a
 }
 
-.song_card{
-  font-size: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-}
-
 .spotify-searchbar h5 {
   color: white;
+}
+.card{
+  position: relative;
+}
+
+.card img{
+  width: 100%;
+  display: block;
+
+}
+.card .front {
+  transform: rotateY(90deg);
+  width: 40%;
+  position: absolute;
+}
+.card .back {
+  transition-delay: 0.2s;
+}
+
+.flipped .front {
+  transform: rotateY(0deg);
+}
+
+.play-icon {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
