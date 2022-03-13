@@ -14,6 +14,10 @@ function Cards({ tracks, setTracks }) {
     setTurns(0);
   };
 
+  useEffect(() => {
+    shuffleCards();
+  }, []);
+
   const handleChoice = (track) => {
     choiceOne ? setChoiceTwo(track) : setChoiceOne(track);
   };
@@ -21,7 +25,7 @@ function Cards({ tracks, setTracks }) {
   useEffect(() => {
     if (choiceOne && choiceTwo) {
       if (choiceOne.id === choiceTwo.id) {
-        console.log('cards match');
+        // console.log('cards match');
         setTracks((prevTracks) => {
           return prevTracks.map((track) => {
             if (track.id === choiceOne.id) {
@@ -33,7 +37,7 @@ function Cards({ tracks, setTracks }) {
         });
         resetTurn();
       } else {
-        console.log('cards do not match');
+        // console.log('cards do not match');
         setTimeout(() => resetTurn(), 1000);
       }
     }
@@ -44,10 +48,6 @@ function Cards({ tracks, setTracks }) {
     setChoiceTwo(null);
     setTurns((prevTurns) => prevTurns + 1);
   };
-
-  useEffect(() => {
-    shuffleCards();
-  }, []);
 
   return (
     <div className='container'>
