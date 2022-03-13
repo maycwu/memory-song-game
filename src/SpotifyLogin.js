@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Cards from './Cards';
-import 'boxicons';
+import SearchBar from './SearchBar';
 
-function Spotify() {
+function SpotifyLogin() {
   const CLIENT_ID = '0e54567ee7f64c469bac869f0d6cfa6e';
   const REDIRECT_URI = 'http://localhost:3000';
   const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
@@ -27,7 +26,6 @@ function Spotify() {
         .find((elem) => elem.startsWith('access_token'))
         .split('=')[1];
 
-      //console.log(token);
       window.location.hash = '';
       window.localStorage.setItem('token', token);
     }
@@ -49,10 +47,8 @@ function Spotify() {
         params: {
           q: searchKey,
           type: 'artist',
-          perPage: 5,
         },
       });
-      //   console.log(artists)
       setArtists(data.artists.items[0].id);
     } catch (error) {
       console.log(error);
@@ -71,15 +67,14 @@ function Spotify() {
         }
       );
       setTracks(data.tracks.slice(0, 8).concat(data.tracks.slice(0, 8)));
-      // setTracks2(data.tracks.slice(0,7));
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
 
   function handlerClick() {
     window.location.reload();
- }
+  }
 
   return (
     <div className='App'>
@@ -95,39 +90,22 @@ function Spotify() {
             Log out
           </button>
         )}
-        {token ? (
-          <div>
-             <button className="btn" onClick={handlerClick}>Play Again</button>
-            <form
-              onChange={(e) => {
-                searchArtist(e);
-                searchTracks(e);
-              }}
-            >
-              <label>
-                Find Artist on{' '}
-                <box-icon
-                  name='spotify'
-                  type='logo'
-                  flip='vertical'
-                  animation='tada'
-                  color='#ffffff'
-                ></box-icon>{' '}
-              </label>
-              <input
-                placeholder='search...'
-                type='text'
-                onChange={(e) => setSearchKey(e.target.value)}
-              />
-            </form>
-          </div>
-        ) : (
-          ''
-        )}
       </div>
-      <Cards tracks={tracks} setTracks={setTracks} token={token} />
+      {token ? (
+        <SearchBar
+          setArtists={setArtists}
+          setTracks={setTracks}
+          token={token}
+          setSearchKey={setSearchKey}
+          searchArtist={searchArtist}
+          searchTracks={searchTracks}
+          tracks={tracks}
+          handlerClick={handlerClick}
+        />
+      ) : (
+        ''
+      )}
     </div>
   );
 }
-
-export default Spotify;
+export default SpotifyLogin;
