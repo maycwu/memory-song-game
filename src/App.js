@@ -1,4 +1,4 @@
-import Spotify from './Spotify';
+import Spotify from './SpotifyLogin';
 
 
 function App() {
