@@ -2,44 +2,53 @@ import { useState } from 'react';
 import 'boxicons';
 const audio = document.createElement('audio');
 
-function SingleCard({ track, handleChoice, index, flipped, choiceOne, choiceTwo }) {
-  //   const [audioStatus, setAudioStatus] = useState(false);
+function SingleCard({ track, handleChoice, flipped, disabled }) {
+  const [audioStatus, setAudioStatus] = useState(true);
 
-  //  async function audioClick(status, audioSource) {
-  //     audio.src = await audioSource;
-  //     if (status) {
-  //       audio.load();
-  //       audio.play();
-  //     } else {
-  //       audio.pause();
-
-  //     }
-  //     console.log(audioStatus)
-  //   }
+  async function audioClick(status, audioSource) {
+    audio.src = await audioSource;
+    if (status) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+    console.log('audiostatus', audioStatus);
+  }
 
   const handleClick = () => {
-    handleChoice(track);
+    if (!disabled || !audioStatus) {
+      handleChoice(track);
+    } else {
+      setAudioStatus(true);
+    }
   };
 
   return (
     <div className='card'>
-      <div className={flipped ? 'flipped' : ''}>
-        <img
-          className='front'
-          src={track.album.images[0].url}
-          alt='card front'
-        />
+      <div
+        className={flipped ? 'flipped' : ''}
+        onClick={() => {
+          setAudioStatus(!audioStatus);
+          audioClick(audioStatus, track.preview_url);
+        }}
+      >
+        {audioStatus ? (
+          <div className='play-icon'>
+            <box-icon onClick={audio.pause()} name='play-circle'></box-icon>
+          </div>
+        ) : (
+          <div className='play-icon'>
+            <box-icon name='pause-circle'></box-icon>
+          </div>
+        )}
         <img
           className='back'
           src={track.type === true ? '/img/green.png' : '/img/cover.png'}
           alt='card back'
-          onClick={handleClick}
+          onClick={() => {
+            handleClick();
+          }}
         />
-
-        {/* {track.images[0].url ? console.log(tracks.images[0].url) : ''} */}
-        {/* {track.name} */}
-        {/* {console.log(track.type, track.name)} */}
-        {console.log("track", track, "TRACK TYPEEEE", track.type, 'index', index, 'choiceOne', choiceOne, 'choiceTwo',choiceTwo)}
       </div>
     </div>
   );
