@@ -12,7 +12,6 @@ function SingleCard({ track, handleChoice, flipped, disabled }) {
     } else {
       audio.pause();
     }
-    console.log('audiostatus', audioStatus);
   }
 
   const handleClick = () => {
