@@ -3,7 +3,7 @@ import axios from 'axios';
 import SearchBar from './SearchBar';
 
 function SpotifyLogin() {
-  const CLIENT_ID = '0e54567ee7f64c469bac869f0d6cfa6e';
+  const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
   const REDIRECT_URI = 'http://localhost:3000';
   const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
   const SEARCH_ENDPOINT = 'https://api.spotify.com/v1/search';
