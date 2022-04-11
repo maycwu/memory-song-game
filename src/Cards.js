@@ -37,8 +37,8 @@ function Cards({ tracks, setTracks }) {
         });
         resetTurn();
       } else {
-        // console.log('cards do not match');
-        setTimeout(() => resetTurn(), 1000);
+        // console.log('cards do not match!');
+        setTimeout(() => resetTurn(), 1100);
       }
     }
   }, [choiceOne, choiceTwo]);

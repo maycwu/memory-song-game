@@ -4,7 +4,7 @@ import SearchBar from './SearchBar';
 
 function SpotifyLogin() {
   const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
-  const REDIRECT_URI = 'http://localhost:3000';
+  const REDIRECT_URI = 'https://memory-song-game.herokuapp.com/';
   const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
   const SEARCH_ENDPOINT = 'https://api.spotify.com/v1/search';
   const RESPONSE_TYPE = 'token';
